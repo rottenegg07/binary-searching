@@ -1,0 +1,57 @@
+#include<iostream>
+using namespace std;
+
+int binary_array(int myarray[], int value, int l, int r) {
+    if (l <= r) {
+        int mid = l + (r - l) / 2;
+
+        if (myarray[mid] == value)
+            return mid;
+        else if (myarray[mid] > value)
+            return binary_array(myarray, value, l, mid - 1);
+        else
+            return binary_array(myarray, value, mid + 1, r);
+    }
+
+    return -1;  // If the value is not found
+}
+
+int main() {
+    int s, i;
+    cout << "Enter your array size: ";
+    cin >> s;
+    int myarray[s];
+    for (int i = 0; i < s; i++) {
+        cout << "Enter your " << i + 1 << " Element: ";
+        cin >> myarray[i];
+    }
+
+    for (i = 0; i < s; i++) {
+        for (int j = i + 1; j < s; j++) {
+            if (myarray[i] > myarray[j]) {
+                int temp = myarray[i];
+                myarray[i] = myarray[j];
+                myarray[j] = temp;
+            }
+        }
+    }
+
+    cout << "Sorted Array: ";
+    for (i = 0; i < s; i++) {
+        cout << myarray[i] << " ";
+    }
+    cout << "\n";
+
+    int value;
+    cout << "Enter the number you want to find in the array: ";
+    cin >> value;
+
+    int result = binary_array(myarray, value, 0, s - 1);
+
+    if (result != -1)
+        cout << "Element found at index " << result << "\n";
+    else
+        cout << "Element not found in the array\n";
+
+    return 0;
+}
